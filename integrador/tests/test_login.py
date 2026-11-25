@@ -3,6 +3,15 @@ from pages.login_page import LoginPage
 from pages.login_page import LoginPage
 from utils.csv_reader import leer_datos_login
 import pytest
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+def login(self, username, password):
+    logger.info("Iniciando sesión con el usuario: %s", username)
+    self.enter_username(username)
+    self.enter_password(password)
+    self.click_login()
 
 def test_login_success(driver):
     login_page = LoginPage(driver)

@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 import pytest
 from selenium import webdriver
+import base64
 
 SCREENSHOTS_DIR = Path("screenshots")
 
@@ -24,7 +25,16 @@ def pytest_runtest_makereport(item, call):
     if report.when == "call" and report.failed:
         web_driver = item.funcargs.get("driver")
         if web_driver:
-            SCREENSHOTS_DIR.mkdir(exist_ok=True)
+            SCREENSHOTS_DIR.mkdir(parents=True, exist_ok=True)
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             file_name = f"{item.name}_{timestamp}.png"
-            web_driver.save_screenshot(str(SCREENSHOTS_DIR / file_name))
+            archivo = SCREENSHOTS_DIR / file_name
+
+            web_driver.save_screenshot(str(archivo))
+
+            pytest_html = item.config.pluginmanager.getplugin("html")
+            if pytest_html is not None:
+                imagen_b64 = base64.b64encode(archivo.read_bytes()).decode("utf-8")
+                extras = getattr(report, "extras", [])
+                extras.append(pytest_html.extras.png(imagen_b64, name="Screenshot"))
+                report.extras = extras

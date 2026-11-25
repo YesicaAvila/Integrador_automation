@@ -1,5 +1,9 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
+
 
 class LoginPage(BasePage):
     URL = "https://www.saucedemo.com/"
