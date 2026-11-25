@@ -16,11 +16,13 @@ def test_cart(driver):
 
 def test_remove_prod_cart(driver):
     # Inicia sesión, agrega un producto y navega al carrito
-    LoginPage(driver).open_login_page().login("standar_user", "secret_sauce")
+    LoginPage(driver).open_login_page().login("standard_user", "secret_sauce")
     InventoryPage(driver).add_product_by_id("add-to-cart-sauce-labs-fleece-jacket")
+    InventoryPage(driver).go_to_cart()
 
     # Elimina el producto usando el método de CartPage y verifica que quede vacío
     cart_page = CartPage(driver)
     assert cart_page.get_items_count() == 1
-    cart_page.remove_item_by_id("remove-sauce-labs-fleece-jacket")
+    #cart_page.remove_item_by_id("remove-sauce-labs-fleece-jacket")
+    cart_page.remove_first_item()
     assert cart_page.get_items_count() == 0

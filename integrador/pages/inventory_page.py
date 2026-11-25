@@ -21,6 +21,7 @@ class InventoryPage(BasePage):
         first_card = self.find_visible(self.PRODUCT_CARDS)
         name = first_card.find_element(*self.PRODUCT_NAME_REL).text
         price = first_card.find_element(*self.PRODUCT_PRICE_REL).text
+        return name, price
 
     def add_first_product(self):
         # Agrega el primer producto al carrito y devuelve su nombre
@@ -28,6 +29,10 @@ class InventoryPage(BasePage):
         product_name = first_card.find_element(*self.PRODUCT_NAME_REL).text
         first_card.find_element(*self.ADD_BUTTON_REL).click()
         return product_name
+
+    def add_product_by_id(self, button_id):
+        self.click((By.ID, button_id))
+        return self
 
     def is_menu_visible(self):
         return self.find_visible(self.BURGER_MENU_BUTTON).is_displayed()

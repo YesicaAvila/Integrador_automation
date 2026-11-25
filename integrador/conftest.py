@@ -17,7 +17,7 @@ def driver():
 
 # Obtiene el resultado de cada etapa de la prueba (setup, call, teardown)
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runteste_makereport(item, call):
+def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
 

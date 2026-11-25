@@ -33,6 +33,9 @@ class LoginPage(BasePage):
         self.click_login()
 
     def get_error_message(self):
+        return self.get_text(self.ERROR_MESSAGE)
+
+    def get_logo_text(self):
         return self.get_text(self.LOGO)
 
     def get_products_title(self):
