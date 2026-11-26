@@ -1,0 +1,7 @@
+2026-11-25 21:57:06 | INFO     | test_login | Inicio de sesión exitosa
+2026-11-25 21:57:14 | INFO     | test_login | Inicio de sesión fallida
+2026-11-25 21:57:22 | INFO     | test_login | Ejecutando login parametrizado | usuario='standard_user' | espera_exito=True
+2026-11-25 21:57:29 | INFO     | test_login | Ejecutando login parametrizado | usuario='locked_out_user' | espera_exito=False
+2026-11-25 21:57:31 | INFO     | test_login | Login parametrizado rechazado como se esperaba para usuario='locked_out_user'
+2026-11-25 21:57:35 | INFO     | test_login | Ejecutando login parametrizado | usuario='usuario_invalido' | espera_exito=False
+2026-11-25 21:57:36 | INFO     | test_login | Login parametrizado rechazado como se esperaba para usuario='usuario_invalido'

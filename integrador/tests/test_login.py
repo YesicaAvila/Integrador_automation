@@ -8,12 +8,12 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 def login(self, username, password):
-    logger.info("Iniciando sesión con el usuario: %s", username)
     self.enter_username(username)
     self.enter_password(password)
     self.click_login()
 
 def test_login_success(driver):
+    logger.info("Inicio de sesión exitosa")
     login_page = LoginPage(driver)
     login_page.open_login_page().login("standard_user", "secret_sauce")
 
@@ -22,6 +22,7 @@ def test_login_success(driver):
     assert login_page.get_products_title() == "Products"
 
 def test_login_fallido(driver):
+    logger.info("Inicio de sesión fallida")
     login_page = LoginPage(driver)
     login_page.open_login_page().login("usuario_invalido", "clave_incorrecta")
 
@@ -35,6 +36,11 @@ DATOS_LOGIN = leer_datos_login()
 )
 
 def test_login_parametizado(driver, username, password, expected_success, expected_message):
+    logger.info(
+        "Ejecutando login parametrizado | usuario='%s' | espera_exito=%s",
+        username,
+        expected_success,
+    )
     login_page = LoginPage(driver)
     login_page.open_login_page().login(username, password)
 
@@ -44,3 +50,7 @@ def test_login_parametizado(driver, username, password, expected_success, expect
     else:
         assert "/inventory.html" not in driver.current_url
         assert expected_message in login_page.get_error_message()
+        logger.info(
+            "Login parametrizado rechazado como se esperaba para usuario='%s'",
+            username,
+        )

@@ -8,7 +8,7 @@ def get_logger(name: str = "integrador") -> logging.Logger:
 
     logger.setLevel(logging.INFO)
     log_dir = Path(__file__).resolve().parent.parent / "reports"
-    log_dir.mkdir(parent=True, exist_ok=True)
+    log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / "ejecucion.log"
 
     formato = logging.Formatter(
