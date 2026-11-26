@@ -20,6 +20,7 @@ def test_login_success(driver):
     assert "/inventory.html" in driver.current_url
     assert login_page.get_logo_text() == "Swag Labs"
     assert login_page.get_products_title() == "Products"
+    #assert False, "Fallo forzado para probar captura"
 
 def test_login_fallido(driver):
     logger.info("Inicio de sesión fallida")
