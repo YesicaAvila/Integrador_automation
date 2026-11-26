@@ -18,8 +18,10 @@ class CartPage(BasePage):
         return self
 
     def remove_first_item(self):
+        items_antes = self.get_items_count()
         first_item = self.find_visible(self.CART_ITEMS)
         first_item.find_element(*self.REMOVE_BUTTON_REL).click()
+        self.wait.until(lambda d: self.get_items_count() < items_antes)
         return self
 
     def get_items_count(self):

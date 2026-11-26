@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from selenium.webdriver.support import expected_conditions as EC
 
 class CheckoutPage(BasePage):
     FIRST_NAME_INPUT = (By.ID, "first-name")
@@ -12,6 +13,7 @@ class CheckoutPage(BasePage):
     COMPLETE_HEADER = (By.CLASS_NAME, "complete-header")
 
     def fill_customer_info(self, first_name, last_name, postal_code):
+        self.wait.until(EC.url_contains("checkout-step-one.html"))
         self.type_text(self.FIRST_NAME_INPUT, first_name)
         self.type_text(self.LAST_NAME_INPUT, last_name)
         self.type_text(self.POSTAL_CODE_INPUT, postal_code)
@@ -20,6 +22,7 @@ class CheckoutPage(BasePage):
 
     def finish_order(self):
         #Confirma la compra
+        self.wait.until(EC.url_contains("checkout-step-two.html"))
         self.click(self.FINISH_BUTTON)
         return self
 

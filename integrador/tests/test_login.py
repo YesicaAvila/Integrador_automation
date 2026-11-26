@@ -41,16 +41,20 @@ def test_login_parametizado(driver, username, password, expected_success, expect
         username,
         expected_success,
     )
-    login_page = LoginPage(driver)
-    login_page.open_login_page().login(username, password)
+    try:
+        login_page = LoginPage(driver)
+        login_page.open_login_page().login(username, password)
 
-    if expected_success:
-        assert "/inventory.html" in driver.current_url
-        assert login_page.get_logo_text() == "Swag Labs"
-    else:
-        assert "/inventory.html" not in driver.current_url
-        assert expected_message in login_page.get_error_message()
-        logger.info(
-            "Login parametrizado rechazado como se esperaba para usuario='%s'",
-            username,
-        )
+        if expected_success:
+            assert "/inventory.html" in driver.current_url
+            assert login_page.get_logo_text() == "Swag Labs"
+        else:
+            assert "/inventory.html" not in driver.current_url
+            assert expected_message in login_page.get_error_message()
+            logger.info(
+                "Login parametrizado rechazado como se esperaba para usuario='%s'",
+                username,
+            )
+    except Exception:
+            logger.exception("Error durante la prueba de login para usuario='%s'", username)
+            raise
