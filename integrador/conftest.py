@@ -3,6 +3,8 @@ from pathlib import Path
 import pytest
 from selenium import webdriver
 import base64
+from selenium.webdriver.chrome.options import Options
+import os
 
 SCREENSHOTS_DIR = Path("screenshots")
 
@@ -10,13 +12,30 @@ SCREENSHOTS_DIR = Path("screenshots")
 # Inicializa el navegador antes de cada prueba
 @pytest.fixture
 def driver():
-    web_driver = webdriver.Chrome()
-    web_driver.maximize_window()
+    options = Options()
+    options.add_argument("--disable-save-password-bubble")
+    options.add_argument("--disable-features=PasswordLeakDetection,SafeBrowsingPasswordCheck")
+    options.add_experimental_option(
+        "prefs",
+        {
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+        },
+    )
+    if os.getenv("CI") == "true":
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1920,1080")
+
+    web_driver = webdriver.Chrome(options=options)
+    if os.getenv("CI") != "true":
+        web_driver.maximize_window()
     yield web_driver
     #Cierra el navegador
     web_driver.quit()
 
-# Obtiene el resultado de cada etapa de la prueba (setup, call, teardown)
+# Rcibe el resultado de cada etapa de la prueba (setup, call, teardown)
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

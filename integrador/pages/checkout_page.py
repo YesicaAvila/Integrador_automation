@@ -23,7 +23,9 @@ class CheckoutPage(BasePage):
     def finish_order(self):
         #Confirma la compra
         self.wait.until(EC.url_contains("checkout-step-two.html"))
-        self.click(self.FINISH_BUTTON)
+        boton_finish = self.wait.until(EC.element_to_be_clickable(self.FINISH_BUTTON))
+        boton_finish.click()
+        self.wait.until(EC.url_contains("checkout-complete.html"))
         return self
 
     def get_complete_header(self):
