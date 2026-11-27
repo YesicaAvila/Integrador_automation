@@ -4,6 +4,7 @@ from pages.login_page import LoginPage
 
 
 def test_cart(driver):
+    """Valida que al agregar un producto se actualice el contador y aparezca en el carrito."""
     LoginPage(driver).open_login_page().login("standard_user", "secret_sauce")
     inventory_page = InventoryPage(driver)
     inventory_page.add_product_by_id("add-to-cart-sauce-labs-fleece-jacket")
@@ -15,6 +16,7 @@ def test_cart(driver):
     assert "Sauce Labs Fleece Jacket" in cart_page.get_item_names()
 
 def test_remove_prod_cart(driver):
+    """Verifica que al eliminar el producto del carrito la cantidad vuelva a cero."""
     # Inicia sesión, agrega un producto y navega al carrito
     LoginPage(driver).open_login_page().login("standard_user", "secret_sauce")
     InventoryPage(driver).add_product_by_id("add-to-cart-sauce-labs-backpack")

@@ -2,6 +2,7 @@ from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 
 def test_inventory(driver):
+    """Verifica el catálogo, los datos del primer producto y los controles visibles en inventario"""
     # Inicia sesión reutilizando LoginPage (y el driver viene desde conftest.py)
     LoginPage(driver).open_login_page().login("standard_user", "secret_sauce")
 
